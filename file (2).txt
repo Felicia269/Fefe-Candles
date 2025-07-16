@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Custom Candle Builder</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #fdfdfd;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    label {
+      display: block;
+      margin: 1rem 0 0.4rem;
+      font-weight: 600;
+    }
+
+    select, input[type="text"], input[type="checkbox"] {
+      width: 100%;
+      padding: 0.6rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+
+    .checkbox-group {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 10px;
+      margin-top: 0.5rem;
+    }
+
+    .checkbox-group label {
+      font-weight: normal;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+      margin-top: 2rem;
+      width: 100%;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .section {
+      margin-bottom: 2rem;
+    }
+
+    .checkbox-title {
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Build Your Custom Candle</h1>
+
+  <form id="candleForm">
+
+    <!-- Product Type -->
+    <div class="section">
+      <label for="productType">Product Type</label>
+      <select id="productType" required>
+        <option value="" disabled selected>Select product type</option>
+        <option value="waxMelts">Wax Melts</option>
+        <option value="waxBars">Wax Bars</option>
+        <option value="waxCubes">Wax Cubes</option>
+        <option value="candle">Candle</option>
+        <option value="siliconeMoldedCandles">Silicone Molded Candles</option>
+      </select>
+    </div>
+
+    <!-- Size -->
+    <div class="section">
+      <label for="sizeSelect">Size</label>
+      <select id="sizeSelect" required></select>
+    </div>
+
+    <!-- Container -->
+    <div class="section">
+      <label for="containerSelect">Container Type</label>
+      <select id="containerSelect" required></select>
+    </div>
+
+    <!-- Wax Type -->
+    <div class="section">
+      <label for="waxTypeSelect">Wax Type</label>
+      <select id="waxTypeSelect" required></select>
+    </div>
+
+    <!-- Scent -->
+    <div class="section">
+      <label for="scentSelect">Scent</label>
+      <select id="scentSelect" required></select>
+    </div>
+
+    <!-- Color -->
+    <div class="section">
+      <label for="colorSelect">Color</label>
+      <select id="colorSelect" required></select>
+    </div>
+
+    <!-- Silicone Mold Options -->
+    <div id="siliconeMoldSection" class="section hidden">
+      <div class="checkbox-title">Silicone Mold Options</div>
+      <div class="checkbox-group">
+        <label><input type="checkbox" name="mold" value="Bubble Cube"> Bubble Cube</label>
+        <label><input type="checkbox" name="mold" value="Bubble Heart Cube"> Bubble Heart Cube</label>
+        <label><input type="checkbox" name="mold" value="Large Rose Bear"> Large Rose Bear</label>
+        <label><input type="checkbox" name="mold" value="Small Rose Bear"> Small Rose Bear</label>
+        <label><input type="checkbox" name="mold" value="Large Knot Pillar"> Large Knot Pillar</label>
+        <label><input type="checkbox" name="mold" value="Large Spiral Pillar"> Large Spiral Pillar</label>
+        <label><input type="checkbox" name="mold" value="Lotus Flower"> Lotus Flower</label>
+        <label><input type="checkbox" name="mold" value="Heart"> Heart</label>
+        <label><input type="checkbox" name="mold" value="Medium Spiral Pillar"> Medium Spiral Pillar</label>
+        <label><input type="checkbox" name="mold" value="Rose Ball"> Rose Ball</label>
+        <label><input type="checkbox" name="mold" value="Dragon Head"> Dragon Head</label>
+        <label><input type="checkbox" name="mold" value="Spiral Ball"> Spiral Ball</label>
+      </div>
+    </div>
+
+    <button type="submit">Add to Cart</button>
+  </form>
+</div>
+
+<script>
+  const productTypeSelect = document.getElementById('productType');
+  const sizeSelect = document.getElementById('sizeSelect');
+  const containerSelect = document.getElementById('containerSelect');
+  const waxTypeSelect = document.getElementById('waxTypeSelect');
+  const scentSelect = document.getElementById('scentSelect');
+  const colorSelect = document.getElementById('colorSelect');
+  const siliconeMoldSection = document.getElementById('siliconeMoldSection');
+
+  const optionsData = {
+    waxMelts: {
+      sizes: ['2.5 oz'],
+      containers: ['None'],
+      waxTypes: ['Paraffin', 'Soy'],
+      scents: ['Floral', 'Fresh', 'Warm/Sweet'],
+      colors: ['Natural', 'White', 'Cool Gray', 'Light Blue', 'Midnight Blue', 'Moss Green', 'Terracotta', 'Burnt Orange', 'Plum', 'Crimson Red', 'Soft Yellow']
+    },
+    waxBars: {
+      sizes: ['1.5 oz'],
+      containers: ['None'],
+      waxTypes: ['Paraffin', 'Soy'],
+      scents: ['Floral', 'Fresh', 'Warm/Sweet'],
+      colors: ['Natural', 'White', 'Cool Gray', 'Light Blue', 'Midnight Blue', 'Moss Green', 'Terracotta', 'Burnt Orange', 'Plum', 'Crimson Red', 'Soft Yellow']
+    },
+    waxCubes: {
+      sizes: ['1 oz'],
+      containers: ['None'],
+      waxTypes: ['Paraffin', 'Soy'],
+      scents: ['Floral', 'Fresh', 'Warm/Sweet'],
+      colors: ['Natural', 'White', 'Cool Gray', 'Light Blue', 'Midnight Blue', 'Moss Green', 'Terracotta', 'Burnt Orange', 'Plum', 'Crimson Red', 'Soft Yellow']
+    },
+    candle: {
+      sizes: ['4 oz', '6 oz', '8 oz', '15 oz'],
+      containers: ['Glass Jar', 'Tin Jar'],
+      waxTypes: ['Apricot Coconut Wax Blend', 'Soy Wax', 'Beeswax', 'Coconut Wax', 'Coconut & Beeswax Blend', 'Coconut Paraffin Wax Blend', 'Paraffin Blend', 'Palm Paraffin Blend', 'Palm Wax'],
+      scents: ['Floral', 'Fresh', 'Warm/Sweet'],
+      colors: ['Natural', 'White', 'Cool Gray', 'Light Blue', 'Midnight Blue', 'Moss Green', 'Terracotta', 'Burnt Orange', 'Plum', 'Crimson Red', 'Soft Yellow']
+    },
+    siliconeMoldedCandles: {
+      sizes: [],
+      containers: ['Silicone Mold'],
+      waxTypes: ['Paraffin', 'Soy'],
+      scents: ['Floral', 'Fresh', 'Warm/Sweet'],
+      colors: ['Natural', 'White', 'Cool Gray', 'Light Blue', 'Midnight Blue', 'Moss Green', 'Terracotta', 'Burnt Orange', 'Plum', 'Crimson Red', 'Soft Yellow']
+    }
+  };
+
+  function populateSelect(selectElem, options) {
+    selectElem.innerHTML = '';
+    if (options.length === 0) {
+      selectElem.disabled = true;
+      selectElem.innerHTML = '<option value="">N/A</option>';
+      return;
+    }
+    options.forEach(opt => {
+      const option = document.createElement('option');
+      option.value = opt;
+      option.textContent = opt;
+      selectElem.appendChild(option);
+    });
+    selectElem.disabled = false;
+  }
+
+  productTypeSelect.addEventListener('change', () => {
+    const selected = productTypeSelect.value;
+    const data = optionsData[selected];
+
+    populateSelect(sizeSelect, data.sizes);
+    populateSelect(containerSelect, data.containers);
+    populateSelect(waxTypeSelect, data.waxTypes);
+    populateSelect(scentSelect, data.scents);
+    populateSelect(colorSelect, data.colors);
+
+    if (selected === 'siliconeMoldedCandles') {
+      siliconeMoldSection.classList.remove('hidden');
+      containerSelect.disabled = true;
+    } else {
+      siliconeMoldSection.classList.add('hidden');
+      containerSelect.disabled = false;
+    }
+  });
+</script>
+
+</body>
+</html>
