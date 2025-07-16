@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Candle Builder</title>
+<style>
+  .hidden { display: none; }
+  label { display: block; margin-top: 8px; }
+</style>
+</head>
+<body>
+
+<h1>Build Your Candle</h1>
+
+<form id="candleForm">
+
+  <!-- Product Type -->
+  <label>Product Type:</label>
+  <select id="productType" name="productType" required>
+    <option value="" disabled selected>Select product type</option>
+    <option value="waxMelts">Wax Melts</option>
+    <option value="waxBars">Wax Bars</option>
+    <option value="waxCubes">Wax Cubes</option>
+    <option value="candle">Candle</option>
+    <option value="siliconeMoldedCandles">Silicone Molded Candles</option>
+  </select>
+
+  <!-- Sizes -->
+  <div id="sizesSection">
+    <label>Size:</label>
+    <select id="sizeSelect" name="size" required>
+      <!-- Options populated dynamically -->
+    </select>
+  </div>
+
+  <!-- Container Types -->
+  <div id="containerSection">
+    <label>Container Type:</label>
+    <select id="containerSelect" name="container" required>
+      <!-- Options populated dynamically -->
+    </select>
+  </div>
+
+  <!-- Wax Types -->
+  <div id="waxTypesSection">
+    <label>Wax Type:</label>
+    <select id="waxTypeSelect" name="waxType" required>
+      <!-- Options populated dynamically -->
+    </select>
+  </div>
+
+  <!-- Scent Options -->
+  <div id="scentSection">
+    <label>Scent Options:</label>
+    <select id="scentSelect" name="scent" required>
+      <!-- Options populated dynamically -->
+    </select>
+  </div>
+
+  <!-- Color Options -->
+  <div id="colorSection">
+    <label>Color Options:</label>
+    <select id="colorSelect" name="color" required>
+      <!-- Options populated dynamically -->
+    </select>
+  </div>
+
+  <!-- Silicone Mold Options -->
+  <div id="siliconeMoldSection" class="hidden">
+    <label>Silicone Mold Options:</label>
+    <input type="checkbox" id="bubbleCube" name="siliconeMold" value="Bubble Cube">
+    <label for="bubbleCube">Bubble Cube</label><br>
+
+    <input type="checkbox" id="bubbleHeartCube" name="siliconeMold" value="Bubble Heart Cube">
+    <label for="bubbleHeartCube">Bubble Heart Cube</label><br>
+
+    <input type="checkbox" id="largeRoseBear" name="siliconeMold" value="Large Rose Bear">
+    <label for="largeRoseBear">Large Rose Bear</label><br>
+
+    <input type="checkbox" id="smallRoseBear" name="siliconeMold" value="Small Rose Bear">
+    <label for="smallRoseBear">Small Rose Bear</label><br>
+
+    <input type="checkbox" id="largeKnotPillar" name="siliconeMold" value="Large Knot Pillar">
+    <label for="largeKnotPillar">Large Knot Pillar</label><br>
+
+    <input type="checkbox" id="largeSpiralPillar" name="siliconeMold" value="Large Spiral Pillar">
+    <label for="largeSpiralPillar">Large Spiral Pillar</label><br>
+
+    <input type="checkbox" id="lotusFlower" name="siliconeMold" value="Lotus Flower">
+    <label for="lotusFlower">Lotus Flower</label><br>
+
+    <input type="checkbox" id="heart" name="siliconeMold" value="Heart">
+    <label for="heart">Heart</label><br>
+
+    <input type="checkbox" id="mediumSpiralPillar" name="siliconeMold" value="Medium Spiral Pillar">
+    <label for="mediumSpiralPillar">Medium Spiral Pillar</label><br>
+
+    <input type="checkbox" id="roseBall" name="siliconeMold" value="Rose Ball">
+    <label for="roseBall">Rose Ball</label><br>
+
+    <input type="checkbox" id="dragonHead" name="siliconeMold" value="Dragon Head">
+    <label for="dragonHead">Dragon Head</label><br>
+
+    <input type="checkbox" id="spiralBall" name="siliconeMold" value="Spiral Ball">
+    <label for="spiralBall">Spiral Ball</label><br>
+  </div>
+
+  <br>
+  <button type="submit">Add to Cart</button>
+
+</form>
+
+<script>
+  const productTypeSelect = document.getElementById('productType');
+  const sizeSelect = document.getElementById('sizeSelect');
+  const containerSelect = document.getElementById('containerSelect');
+  const waxTypeSelect = document.getElementById('waxTypeSelect');
+  const scentSelect = document.getElementById('scentSelect');
+  const colorSelect = document.getElementById('colorSelect');
+  const siliconeMoldSection = document.getElementById('siliconeMoldSection');
+
+  // Option data based on your specs
+  const optionsData = {
+    waxMelts: {
+      sizes: ['2.5 oz'],
+      containers: ['None'],
+      waxTypes: ['Paraffin', 'Soy'],
+      scents: ['Floral', 'Fresh', 'Warm/Sweet'],
+      colors: ['Natural', 'White', 'Cool Gray', 'Light Blue', 'Midnight Blue', 'Moss Green', 'Terracotta', 'Burnt Orange', 'Plum', 'Crimson Red', 'Soft Yellow']
+    },
+    waxBars: {
+      sizes: ['1.5 oz'],
+      containers: ['None'],
+      waxTypes: ['Paraffin', 'Soy'],
+      scents: ['Floral', 'Fresh', 'Warm/Sweet'],
+      colors: ['Natural', 'White', 'Cool Gray', 'Light Blue', 'Midnight Blue', 'Moss Green', 'Terracotta', 'Burnt Orange', 'Plum', 'Crimson Red', 'Soft Yellow']
+    },
+    waxCubes: {
+      sizes: ['1 oz'],
+      containers: ['None'],
+      waxTypes: ['Paraffin', 'Soy'],
+      scents: ['Floral', 'Fresh', 'Warm/Sweet'],
+      colors: ['Natural', 'White', 'Cool Gray', 'Light Blue', 'Midnight Blue', 'Moss Green', 'Terracotta', 'Burnt Orange', 'Plum', 'Crimson Red', 'Soft Yellow']
+    },
+    candle: {
+      sizes: ['4 oz', '6 oz', '8 oz', '15 oz'],
+      containers: ['Glass Jar', 'Tin Jar'],
+      waxTypes: ['Apricot Coconut Wax Blend', 'Soy Wax', 'Beeswax', 'Coconut Wax', 'Coconut & Beeswax Blend', 'Coconut Paraffin Wax Blend', 'Paraffin Blend', 'Palm Paraffin Blend', 'Palm Wax'],
+      scents: ['Floral', 'Fresh', 'Warm/Sweet'],
+      colors: ['Natural', 'White', 'Cool Gray', 'Light Blue', 'Midnight Blue', 'Moss Green', 'Terracotta', 'Burnt Orange', 'Plum', 'Crimson Red', 'Soft Yellow']
+    },
+    siliconeMoldedCandles: {
+      sizes: [],
+      containers: ['Silicone Mold'],
+      waxTypes: ['Paraffin', 'Soy'],
+      scents: ['Floral', 'Fresh', 'Warm/Sweet'],
+      colors: ['Natural', 'White', 'Cool Gray', 'Light Blue', 'Midnight Blue', 'Moss Green', 'Terracotta', 'Burnt Orange', 'Plum', 'Crimson Red', 'Soft Yellow']
+    }
+  };
+
+  function populateSelect(selectElem, options) {
+    selectElem.innerHTML = ''; // Clear previous options
+    if (options.length === 0) {
+      selectElem.disabled = true;
+      selectElem.innerHTML = '<option value="">N/A</option>';
+      return;
+    }
+    selectElem.disabled = false;
+    options.forEach(opt => {
+      const option = document.createElement('option');
+      option.value = opt;
+      option.textContent = opt;
+      selectElem.appendChild(option);
+    });
+  }
+
+  productTypeSelect.addEventListener('change', () => {
+    const selected = productTypeSelect.value;
+
+    // Populate sizes
+    populateSelect(sizeSelect, optionsData[selected].sizes);
+
+    // Populate containers
+    populateSelect(containerSelect, optionsData[selected].containers);
+
+    // Populate wax types
+    populateSelect(waxTypeSelect, optionsData[selected].waxTypes);
+
+    // Populate scents
+    populateSelect(scentSelect, optionsData[selected].scents);
+
+    // Populate colors
+    populateSelect(colorSelect, optionsData[selected].colors);
+
+    // Show silicone mold checkboxes only for silicone molded candles
+    if (selected === 'siliconeMoldedCandles') {
+      siliconeMoldSection.classList.remove('hidden');
+      containerSelect.disabled = true; // Since container is always silicone mold here
+    } else {
+      siliconeMoldSection.classList.add('hidden');
+      containerSelect.disabled = false;
+    }
+  });
+</script>
+
+</body>
+</html>
